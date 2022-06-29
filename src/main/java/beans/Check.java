@@ -1,9 +1,6 @@
 package beans;
 
-import java.util.Scanner;
-
 public class Check {
-    static Scanner sc = new Scanner(System.in);
     static boolean check;
     static int i;
     public static boolean cString(String value){
