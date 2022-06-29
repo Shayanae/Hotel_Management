@@ -31,32 +31,50 @@ public class Hotel {
         }
     }
 
-    public void roomRelease(int roomNumber){
+    public boolean roomRelease(int roomNumber){
         int i = 0;
-        boolean flag = false;
+        boolean flag = false, check = false;
 
         while (i < rooms.length && !flag){
             if (roomNumber == rooms[i].getNumber() && rooms[i].isTaken()){
                 rooms[i].setTaken(false);
+                check = true;
             } else if (roomNumber == rooms[i].getNumber() && !rooms[i].isTaken()) {
                 System.out.println("Cette chambre est déjà vide.");
             }
             i++;
         }
+        return check;
     }
 
-    public void takingRoom(int roomNumber){
+    public boolean takingRoom(int roomNumber, int nbPeople){
         int i = 0;
-        boolean flag = false;
+        boolean flag = false, check = false;
 
         while (i < rooms.length && !flag){
-            if (roomNumber == rooms[i].getNumber() && !rooms[i].isTaken()){
+            if (roomNumber == rooms[i].getNumber() && !rooms[i].isTaken() && nbPeople == rooms[i].getNbPeople()){
                 rooms[i].setTaken(true);
                 flag = true;
+                check = true;
+            } else if (roomNumber == rooms[i].getNumber() && !rooms[i].isTaken() && nbPeople != rooms[i].getNbPeople()) {
+                System.out.println("Veuillez selectionner l'une des chambres proposer.");
             } else if (roomNumber == rooms[i].getNumber() && rooms[i].isTaken()) {
                 System.out.println("Cette chambre est déjà prise.");
             }
             i++;
         }
+        return check;
+    }
+
+    public boolean cRoomTaken(){
+        int i = 0;
+        boolean flag = false;
+        while (i < rooms.length && !flag){
+            if (rooms[i].isTaken()){
+                flag = true;
+            }
+            i++;
+        }
+        return flag;
     }
 }

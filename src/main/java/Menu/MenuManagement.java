@@ -34,34 +34,44 @@ public class MenuManagement {
                     }while (!check);
                     nbPeople = Integer.parseInt(tempNbPeople);
                     hotel.roomDisplay(nbPeople);
-                    do {
+                    if (nbPeople < 1 || nbPeople > 4){
+                        System.out.println("Aucune chambre ne correspond");
+                    }else {
                         do {
-                            System.out.println("Entrer le numéro de chambre voulu");
-                            tempRoomNumber = sc.nextLine();
-                            cRoomNumber = tempRoomNumber.toCharArray();
-                            check = Check.cInt(cRoomNumber);
-                        } while (!check);
-                        roomNumber = Integer.parseInt(tempRoomNumber);
-                        if (roomNumber > 31 || roomNumber < 1){
-                            System.out.println("Ce numéro de chambre n'existe pas");
-                        }else {
-                            hotel.takingRoom(roomNumber);
-                        }
-                    }while (roomNumber > 31 || roomNumber < 1);
-
+                            do {
+                                System.out.println("Entrer le numéro de chambre voulu");
+                                tempRoomNumber = sc.nextLine();
+                                cRoomNumber = tempRoomNumber.toCharArray();
+                                check = Check.cInt(cRoomNumber);
+                            } while (!check);
+                            roomNumber = Integer.parseInt(tempRoomNumber);
+                            if (roomNumber > 31 || roomNumber < 1) {
+                                System.out.println("Ce numéro de chambre n'existe pas");
+                            } else {
+                                check = hotel.takingRoom(roomNumber, nbPeople);
+                            }
+                        } while (roomNumber > 31 || roomNumber < 1 || !check);
+                    }
                     break;
                 case 2:
-                    do {
-                        System.out.println("Entrer le numéro de la chambre qui s'est libérer: ");
-                        tempRoomNumber = sc.nextLine();
-                        cRoomNumber = tempRoomNumber.toCharArray();
-                        check = Check.cInt(cRoomNumber);
-                    }while (!check);
-                    roomNumber = Integer.parseInt(tempRoomNumber);
-                    if (roomNumber > 31 || roomNumber < 1 ){
-                        System.out.println("Ce numéro de chambre n'existe pas");
+                    if (!hotel.cRoomTaken()){
+                        System.out.println("Aucune chambre n'est occuper");
                     }else {
-                        hotel.roomRelease(roomNumber);
+                        do {
+                            do {
+                                System.out.println("Entrer le numéro de la chambre qui s'est libérer: ");
+                                tempRoomNumber = sc.nextLine();
+                                cRoomNumber = tempRoomNumber.toCharArray();
+                                check = Check.cInt(cRoomNumber);
+                            } while (!check);
+                            roomNumber = Integer.parseInt(tempRoomNumber);
+                            if (roomNumber > 31 || roomNumber < 1) {
+                                System.out.println("Ce numéro de chambre n'existe pas");
+                            } else {
+                                check = hotel.roomRelease(roomNumber);
+                                System.out.println("La chambre est maintenant libre");
+                            }
+                        } while (!check);
                     }
                     break;
                 case 3:
