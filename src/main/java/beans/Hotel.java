@@ -1,5 +1,6 @@
 package beans;
 
+
 public class Hotel {
     private Room[] rooms = new Room[31];
 

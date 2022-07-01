@@ -1,4 +1,5 @@
 import Menu.MenuManagement;
+import beans.CsvManagement;
 import beans.Hotel;
 import beans.Room;
 
@@ -9,7 +10,9 @@ public class Main {
 
     public static void main(String[] args) {
         MenuManagement menuManagement = new MenuManagement();
+        CsvManagement csvManagement = new CsvManagement();
 
+        csvManagement.csvRoom();
         menuManagement.Home();
     }
 }
