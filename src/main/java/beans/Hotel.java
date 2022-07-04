@@ -1,6 +1,9 @@
 package beans;
 
 
+import java.sql.ResultSet;
+import java.sql.Statement;
+
 public class Hotel {
     private Room[] rooms = new Room[31];
 
@@ -30,6 +33,8 @@ public class Hotel {
                 System.out.println();
             }
         }
+
+
     }
 
     public boolean roomRelease(int roomNumber){
