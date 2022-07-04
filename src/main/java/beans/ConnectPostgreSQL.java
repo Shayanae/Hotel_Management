@@ -1,17 +1,14 @@
 package beans;
 
+import Menu.MenuManagement;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class ConnectPostgreSQL {
-    static ResultSet res;
-
-    public static void setRes(ResultSet res) {
-        ConnectPostgreSQL.res = res;
-    }
-
+    MenuManagement menuManagement = new MenuManagement();
     public void connect(){
         try{
             // étape 1: charger la classe de driver
@@ -23,9 +20,10 @@ public class ConnectPostgreSQL {
 
             // étape 3: créer l'objet statement
             Statement stmt = conn.createStatement();
-            setRes(stmt.executeQuery("SELECT * FROM rooms"));
+            ResultSet res = stmt.executeQuery("SELECT * FROM rooms");
 
             // étape 4: exécuter la requête
+            menuManagement.Home(stmt);
             while (res.next()){
                 System.out.println(res.getInt(1)+" "+res.getInt(2)+" "+res.getInt(3)+""+res.getBoolean(4));
             }

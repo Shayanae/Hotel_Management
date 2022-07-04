@@ -4,12 +4,6 @@ public class Room {
     private int number, category, nbPeople;
     private boolean taken;
 
-    public Room (int number, int category, int nbPeople){
-        this.number = number;
-        this.category = category;
-        this.nbPeople = nbPeople;
-        this.taken = false;
-    }
 
     public int getNumber(){return number;}
     public int getCategory(){return category;}
