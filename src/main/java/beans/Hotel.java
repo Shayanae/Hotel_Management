@@ -4,19 +4,23 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class Hotel {
-    private Room room = new Room();
     private ResultSet res;
     public void roomDisplay(Statement stmt, int nbPeople){
         try {
-            res = stmt.executeQuery("SELECT rooms.noroom, rooms.nocategory, rooms.nbpeople " +
-                    "FROM rooms " +
-                    "WHERE taken = false AND rooms.nbpeople = " + nbPeople + " " +
-                    "ORDER BY rooms.noroom;");
+            res = stmt.executeQuery("SELECT r.noroom, r.nocategory, r.nbpeople , d.contain, p.price " +
+                    "FROM rooms r, price p, descript d " +
+                    "WHERE r.taken = false " +
+                    "AND r.nbpeople = " + nbPeople + " " +
+                    "AND r.nocategory = p.nocategory " +
+                    "AND r.nocategory = d.nocategory " +
+                    "AND p.nocategory = d.nocategory " +
+                    "AND p.nopers = r.nbpeople " +
+                    "ORDER BY r.noroom;");
             while (res.next()){
                 System.out.print("N° "+ res.getInt("noroom"));
                 System.out.print(", Catégorie "+ res.getInt("nocategory"));
-                System.out.print(", Description: " + room.takeDescript(res.getInt("nocategory") - 1));
-                System.out.println(", Prix :" + room.takePrice(nbPeople-1, res.getInt("nocategory") - 1) + " €");
+                System.out.print(", Description: " + res.getString("contain"));
+                System.out.println(", Prix :" + res.getInt("price"));
             }
 
         }catch (Exception e){
@@ -74,6 +78,7 @@ public class Hotel {
                 }
             }
         }catch (Exception e){
+            System.out.println("BEUG");
         }
 
         return flag;

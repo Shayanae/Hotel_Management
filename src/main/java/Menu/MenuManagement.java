@@ -3,8 +3,6 @@ package Menu;
 import beans.Check;
 import beans.Hotel;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Scanner;
 
@@ -36,10 +34,10 @@ public class MenuManagement {
                         check = Check.cInt(cNbPeople);
                     }while (!check);
                     nbPeople = Integer.parseInt(tempNbPeople);
-                    hotel.roomDisplay(stmt, nbPeople);
                     if (nbPeople < 1 || nbPeople > 4){
                         System.out.println("Aucune chambre ne correspond");
                     }else {
+                        hotel.roomDisplay(stmt, nbPeople);
                         do {
                             do {
                                 System.out.println("Entrer le numéro de chambre voulue");
