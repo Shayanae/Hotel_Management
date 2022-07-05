@@ -1,14 +1,10 @@
 package beans;
 
-
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class Hotel {
-//    private Room[] rooms = new Room[31];
     private Room room = new Room();
-    private Statement stmt;
     private ResultSet res;
     public void roomDisplay(Statement stmt, int nbPeople){
         try {
@@ -28,37 +24,27 @@ public class Hotel {
         }
     }
 
-    public boolean roomRelease(int roomNumber){
-        int i = 0;
-        boolean flag = false, check = false;
+    public boolean roomRelease(Statement stmt, int roomNumber){
+        boolean check = false;
 
-//        while (i < rooms.length && !flag){
-//            if (roomNumber == rooms[i].getNumber() && rooms[i].isTaken()){
-//                rooms[i].setTaken(false);
-//                check = true;
-//            } else if (roomNumber == rooms[i].getNumber() && !rooms[i].isTaken()) {
-//                System.out.println("Cette chambre est déjà vide.");
-//            }
-//            i++;
-//        }
+        try {
+            res = stmt.executeQuery("SELECT taken from rooms WHERE noroom = " + roomNumber + ";");
+            while (res.next() && !check){
+                if (res.getBoolean("taken")){
+                    check = true;
+                    res = stmt.executeQuery("UPDATE rooms SET taken = false WHERE noroom = " + roomNumber + ";");
+                }
+            }
+        }catch (Exception e){
+            // beug à résoudre
+        }
+
         return check;
     }
 
     public boolean takingRoom(Statement stmt, int roomNumber, int nbPeople){
-        boolean check = false, ok = false;
+        boolean check = false;
 
-//        while (i < rooms.length && !flag){
-//            if (roomNumber == rooms[i].getNumber() && !rooms[i].isTaken() && nbPeople == rooms[i].getNbPeople()){
-//                rooms[i].setTaken(true);
-//                flag = true;
-//                check = true;
-//            } else if (roomNumber == rooms[i].getNumber() && !rooms[i].isTaken() && nbPeople != rooms[i].getNbPeople()) {
-//                System.out.println("Veuillez selectionner l'une des chambres proposer.");
-//            } else if (roomNumber == rooms[i].getNumber() && rooms[i].isTaken()) {
-//                System.out.println("Cette chambre est déjà prise.");
-//            }
-//            i++;
-//        }
         try{
             res = stmt.executeQuery("SELECT taken FROM rooms WHERE noroom = " + roomNumber + " " +
                     "AND nbpeople = " + nbPeople + ";");
@@ -66,29 +52,30 @@ public class Hotel {
                 if (res.getBoolean("taken")) {
                     System.out.println("Cette chambre est déjà prise, veuillez prendre une des chambres proposer plus haut");
                 } else {
-                    res.close();
-                    System.out.println("test");
                     check = true;
                     res = stmt.executeQuery("UPDATE rooms SET taken = true WHERE noroom = " + roomNumber + " " +
                             "AND nbpeople = " + nbPeople + ";");
-
                 }
             }
         }catch (Exception e){
-            System.out.println("TEST");
+            // Beug à résoudre
         }
         return check;
     }
 
-    public boolean cRoomTaken(){
-//        int i = 0;
+    public boolean cRoomTaken(Statement stmt){
         boolean flag = false;
-//        while (i < rooms.length && !flag){
-//            if (rooms[i].isTaken()){
-//                flag = true;
-//            }
-//            i++;
-//        }
+
+        try{
+            res = stmt.executeQuery("SELECT taken FROM rooms");
+            while (res.next() && !flag) {
+                if (res.getBoolean("taken")) {
+                    flag = true;
+                }
+            }
+        }catch (Exception e){
+        }
+
         return flag;
     }
 }

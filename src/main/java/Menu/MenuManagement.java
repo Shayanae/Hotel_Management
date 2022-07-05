@@ -57,7 +57,7 @@ public class MenuManagement {
                     }
                     break;
                 case 2:
-                    if (!hotel.cRoomTaken()){
+                    if (!hotel.cRoomTaken(stmt)){
                         System.out.println("Aucune chambre n'est occuper");
                     }else {
                         do {
@@ -71,7 +71,7 @@ public class MenuManagement {
                             if (roomNumber > 31 || roomNumber < 1) {
                                 System.out.println("Ce numéro de chambre n'existe pas");
                             } else {
-                                check = hotel.roomRelease(roomNumber);
+                                check = hotel.roomRelease(stmt, roomNumber);
                                 System.out.println("La chambre est maintenant libre");
                             }
                         } while (!check);

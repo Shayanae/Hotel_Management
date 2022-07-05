@@ -25,7 +25,7 @@ public class Room {
                 "WC, Salle de bain + Douche, Télévision", "2 pièces, Salle de bain + douche, WC, Télévision"};
         return tabDescript[category];
     }
-
+    
     @Override
     public String toString() {
         return "Numéro de chamre: " + number + " Catégorie: " + category + " Description: " + takeDescript(category-1) +
